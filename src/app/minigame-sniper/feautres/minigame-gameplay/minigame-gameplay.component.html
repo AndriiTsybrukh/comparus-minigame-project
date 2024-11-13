@@ -1,0 +1,26 @@
+<div class="sky"></div>
+<div class="grass"></div>
+<div
+  class="gameplay-zone"
+  [style]="{
+    'grid-template-columns': 'repeat(' + columnSize + ', 1fr)',
+    'grid-template-rows': 'repeat(' + rowSize + ', 1fr)',
+  }"
+>
+  @let score = score$ | async;
+  <div class="score">
+    <strong>
+      Player: {{ score?.player }} - Computer {{ score?.computer }}
+    </strong>
+  </div>
+  @let activeCellId = activeCellId$ | async;
+  @for (cell of fieldCells$ | async; track cell.id) {
+    <cmp-minigame-field-cell
+      [cell]="cell"
+      [active]="activeCellId === cell.id"
+      (cellClick)="makeShot(cell.id)"
+    ></cmp-minigame-field-cell>
+  }
+  <div class="door"></div>
+  <div class="door right"></div>
+</div>

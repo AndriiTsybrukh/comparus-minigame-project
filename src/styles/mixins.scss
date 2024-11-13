@@ -1,0 +1,27 @@
+@import "colors";
+
+@mixin gameButton {
+  background-color: $white-transparent;
+  padding: 20px 40px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-weight: bold;
+
+  &:hover {
+    background-color: darken($white-transparent, 10%);
+  }
+}
+
+@mixin lightYellowButton {
+  @include gameButton();
+  background-color: $light-yellow;
+
+  &:hover {
+    background-color: darken($light-yellow, 10%);
+  }
+}
+
+@mixin boxShadow {
+  box-shadow: 0 0 5px 2px $shadow-grey;
+}

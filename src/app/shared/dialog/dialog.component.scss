@@ -1,0 +1,21 @@
+@import "colors";
+@import "mixins";
+
+:host {
+  dialog {
+    @include boxShadow;
+    background-color: $white;
+    color: $black;
+    border-color: transparent;
+    overflow: hidden;
+    border-radius: 5px;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+
+    &::backdrop {
+      background-color: $black-transparent;
+      opacity: 0.75;
+    }
+  }
+}

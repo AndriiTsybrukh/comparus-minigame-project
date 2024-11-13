@@ -1,0 +1,23 @@
+@import "colors";
+
+:host {
+  display: block;
+  background-color: $light-yellow;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.sniper-image {
+  width: 300px;
+  height: 300px;
+  position: absolute;
+  left: 0;
+  bottom: -60px;
+}

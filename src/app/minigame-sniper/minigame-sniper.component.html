@@ -1,0 +1,10 @@
+<div class="wrapper">
+  <cmp-minigame-header></cmp-minigame-header>
+  @let currentGameState = currentGameState$ | async;
+  @if (currentGameState === GameState.MainMenu) {
+    <cmp-minigame-main-menu @fadeInFadeOut></cmp-minigame-main-menu>
+  } @else {
+    <cmp-minigame-gameplay @fadeInFadeOut></cmp-minigame-gameplay>
+  }
+  <img class="sniper-image" src="/images/sniper.webp" alt="Ukrainian Sniper" />
+</div>

@@ -1,0 +1,61 @@
+@import "colors";
+
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  cursor:
+    url(/images/target.svg) 16 16,
+    auto;
+}
+
+.gameplay-zone {
+  position: absolute;
+  padding: 60px 20px 120px;
+  gap: 15px;
+  background-color: $grey;
+  display: grid;
+  bottom: 15%;
+
+  .score {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+  }
+
+  .door {
+    position: absolute;
+    bottom: 0;
+    left: 120px;
+    background-color: $white;
+    width: 60px;
+    height: 100px;
+    background-color: $brown;
+
+    &.right {
+      left: unset;
+      right: 120px;
+    }
+  }
+}
+
+.sky {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 70%;
+  width: 100%;
+  background-color: $light-blue;
+}
+
+.grass {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 30%;
+  width: 100%;
+  background-color: $dark-green;
+}

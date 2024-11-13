@@ -1,0 +1,15 @@
+<div
+  class="field-column"
+  [class.active]="active()"
+  [class.killed]="cell().status === CellStatus.Killed"
+  [class.missed]="cell().status === CellStatus.Missed"
+  (click)="cellClick.emit()"
+>
+  <div class="column-background"></div>
+  <img
+    class="not-human"
+    [class.active]="active()"
+    src="/images/not-a-human.webp"
+    alt="Not a human"
+  />
+</div>

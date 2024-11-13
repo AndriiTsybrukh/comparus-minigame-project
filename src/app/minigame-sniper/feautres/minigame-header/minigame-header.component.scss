@@ -1,0 +1,15 @@
+@import "colors";
+
+:host {
+  z-index: 1;
+  display: block;
+  height: 80px;
+  background-color: $black-transparent;
+  padding: 0 30px;
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  color: $white;
+}
