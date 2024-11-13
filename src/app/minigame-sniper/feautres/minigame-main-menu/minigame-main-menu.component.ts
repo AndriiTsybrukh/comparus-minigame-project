@@ -1,7 +1,22 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GameStateService } from '../../services/game-state.service';
-import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { TypedFormControls } from '../../../shared/models/typed-form-controls.model';
+import {
+  DEFAULT_GAME_CONFIGURATION,
+  GameConfiguration,
+} from '../../models/gameplay.model';
 
 @Component({
   selector: 'cmp-minigame-main-menu',
@@ -11,23 +26,39 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
   styleUrl: './minigame-main-menu.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MinigameMainMenuComponent {
+export class MinigameMainMenuComponent implements OnInit {
   private readonly gameStateService: GameStateService =
     inject(GameStateService);
 
-  protected readonly targetDurationControl: FormControl<number> =
-    new FormControl<number>(1000, {
+  protected readonly configForm: FormGroup<
+    TypedFormControls<Pick<GameConfiguration, 'targetDuration' | 'scoreToWin'>>
+  > = new FormGroup<
+    TypedFormControls<Pick<GameConfiguration, 'targetDuration' | 'scoreToWin'>>
+  >({
+    targetDuration: new FormControl<number>(
+      DEFAULT_GAME_CONFIGURATION.targetDuration,
+      {
+        nonNullable: true,
+        validators: [
+          Validators.required,
+          Validators.min(800),
+          Validators.max(5000),
+        ],
+      },
+    ),
+    scoreToWin: new FormControl<number>(DEFAULT_GAME_CONFIGURATION.scoreToWin, {
       nonNullable: true,
-      validators: [
-        Validators.required,
-        Validators.min(200),
-        Validators.max(5000),
-      ],
-    });
+      validators: [Validators.required, Validators.min(1), Validators.max(100)],
+    }),
+  });
+
+  public ngOnInit(): void {
+    this.configForm.patchValue(this.gameStateService.currentGameConfig);
+  }
 
   public onPlayClick(): void {
     this.gameStateService.startGame({
-      targetDuration: this.targetDurationControl.value,
-    });
+      ...this.configForm.getRawValue(),
+    } as Partial<GameConfiguration>);
   }
 }

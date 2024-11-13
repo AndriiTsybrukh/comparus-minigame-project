@@ -53,6 +53,7 @@ export class MinigameGameplayComponent implements OnInit {
 
   public ngOnInit(): void {
     this.gameplayService.generateField(this.config);
+    this.gameplayService.setScoreToWin(this.config.scoreToWin);
     this.gameplayService
       .startGameplayTimer(this.config)
       .pipe(untilDestroyed(this))

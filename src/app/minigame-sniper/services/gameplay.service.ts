@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import {
+  DEFAULT_GAME_CONFIGURATION,
   EndGameStatus,
   GameConfiguration,
   Score,
 } from '../models/gameplay.model';
 import {
   BehaviorSubject,
-  combineLatest,
   filter,
   map,
   Observable,
@@ -32,6 +32,8 @@ export class GameplayService {
       player: 0,
       computer: 0,
     });
+  private readonly scoreToWin: BehaviorSubject<number> =
+    new BehaviorSubject<number>(DEFAULT_GAME_CONFIGURATION.scoreToWin);
 
   public readonly fieldCells$: Observable<FieldCell[]> =
     this.fieldCellsSubject.asObservable();
@@ -41,11 +43,11 @@ export class GameplayService {
 
   public readonly gameEnded$: Observable<EndGameStatus> = this.score$.pipe(
     map((score) => {
-      if (score.computer >= 10) {
+      if (score.computer >= this.scoreToWin.value) {
         return EndGameStatus.Lose;
       }
 
-      if (score.player >= 10) {
+      if (score.player >= this.scoreToWin.value) {
         return EndGameStatus.Win;
       }
 
@@ -64,11 +66,9 @@ export class GameplayService {
       tap(() => this.setShottedCellId(null)),
       map(() => this.getRandomCellId()),
       tap((activeId) => this.activeCellIdSubject.next(activeId)),
-      switchMap(() =>
-        combineLatest([this.activeCellId$, this.hittedCellIdSubject]).pipe(
-          tap(([activeId, hittedId]) =>
-            this.handlePlayerHitting(activeId, hittedId),
-          ),
+      switchMap((activeId) =>
+        this.hittedCellIdSubject.pipe(
+          tap((hittedId) => this.handlePlayerHitting(activeId, hittedId)),
         ),
       ),
       map(() => undefined),
@@ -112,6 +112,10 @@ export class GameplayService {
 
   public setShottedCellId(cellId: CellId | null): void {
     this.hittedCellIdSubject.next(cellId);
+  }
+
+  public setScoreToWin(value: number): void {
+    this.scoreToWin.next(value);
   }
 
   private changeCellStatus(cellId: CellId, status: CellStatus): void {

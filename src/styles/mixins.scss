@@ -25,3 +25,26 @@
 @mixin boxShadow {
   box-shadow: 0 0 5px 2px $shadow-grey;
 }
+
+@mixin inputField {
+  height: 54px;
+  width: 100%;
+  border-radius: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 0 20px;
+  box-sizing: border-box;
+  background-color: $white-transparent;
+  outline: none;
+  margin-bottom: 20px;
+
+  &.ng-invalid {
+    border: 2px solid $red;
+  }
+}
+
+@mixin inputLabel {
+  font-size: 16px;
+  color: $white;
+  margin-left: 4px;
+}

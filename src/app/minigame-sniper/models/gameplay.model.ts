@@ -28,5 +28,5 @@ export const DEFAULT_GAME_CONFIGURATION: GameConfiguration = {
   sizeY: 10,
   targetDuration: 1000,
   scoreToWin: 10,
-  initDelay: 1000,
+  initDelay: 2000,
 };

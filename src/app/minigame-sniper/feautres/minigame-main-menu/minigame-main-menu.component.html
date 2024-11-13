@@ -1,10 +1,21 @@
 <div class="menu">
-  <input
-    class="duration-input"
-    type="number"
-    [formControl]="targetDurationControl"
-  />
-  <div class="play-button-container">
-    <button class="play-button" (click)="onPlayClick()">PLAY</button>
-  </div>
+  <form [formGroup]="configForm">
+    <label class="field-label" for="duration">Aim Duration</label>
+    <input
+      id="duration"
+      class="field-input"
+      type="number"
+      formControlName="targetDuration"
+    />
+
+    <label class="field-label" for="duration">Points To Win</label>
+    <input
+      id="duration"
+      class="field-input"
+      type="number"
+      formControlName="scoreToWin"
+    />
+  </form>
+
+  <button class="play-button" (click)="onPlayClick()">PLAY</button>
 </div>
